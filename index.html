@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALKTOME</title>
+    <style>
+        @font-face {
+            font-family: 'Orbit';
+            src: local('Orbit');
+        }
+
+        body {
+            margin: 0;
+            height:100vh;
+            overflow: hidden;
+            font-family: 'Orbit', sans-serif;
+        
+        }
+
+        #background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100vw;
+            min-height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #chat-popup {
+            position: fixed;
+            width: 400px;
+            height: 250px;
+            background: white;
+            border-radius: 0px;
+            box-shadow: 0 4px 8px rgba(0,  0,  0, 0.2);
+            overflow: hidden;
+            display: none;
+            z-index: 9999;
+            font-family: 'Orbit', sans-serif;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #chat-header {
+            background: #fbffff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-family: 'Orbit', sans-serif;
+        }
+
+        #chat-body {
+            padding: 10px;
+            height: 150px;
+            overflow-y: auto;
+            font-family: 'Orbit', sans-serif;
+
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+            font-family: 'Orbit', sans-serif;
+    
+        }
+
+        #chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-family: 'Orbit', sans-serif;
+        }
+
+        #chat-input button {
+            padding: 10px 15px;
+            background: white;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'Orbit', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<video id="backgrou nd-video" autoplay loop >
+    <source src="somewithmusic2.mp4" type="video/mp4">
+   
+</video>    
+
+    <div id="chat-popup">
+        <div id="chat-header">TALKTOME</div>
+        <div id="chat-body"></div>
+        <div id="chat-input">
+            <input type="text" id="message" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        document.body.addEventListener('click', function() {
+            const popup = document.getElementById ('chat-popup')
+            popup.style.display = 'block';
+        });
+    
+        // Listen for Enter key press
+        document.getElementById('message').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    
+        function sendMessage() {
+            const messageInput = document.getElementById('message');
+            const message = messageInput.value.trim();
+    
+            if (message) {
+                const chatBody = document.getElementById('chat-body');
+    
+                // Add user message
+                const messageElement = document.createElement('div');
+                messageElement.textContent = message;
+                chatBody.appendChild(messageElement);
+    
+                messageInput.value = '';
+
+                // Auto-scroll to the latest message
+                chatBody.scrollTop = chatBody.scrollHeight;
+    
+                // Generate random response
+                const responses = ['Everything is connected, and there is always more to the story', 'There is always another perspective to consider', 'What you seek depends on what you value', 'In the end, it is all about connection', 'The answer often lies in the question itself', 'There is always more beneath the surface', 'Everything makes sense if you go deep enough', 'What you focus on shapes what you see', ' You already know more than you realise', 'Everything is true somewhere, somehow', 'It is always both more and less than it seems', 'Everything is and is not, all at once', 'What is missing is just as important as what is there', 'The answer is only as real as the question'];
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                setTimeout(() => {
+                    const botMessageElement = document.createElement('div');
+                    botMessageElement.textContent = randomResponse;
+                    chatBody.appendChild(botMessageElement);
+                    chatBody.scrollTop = chatBody.scrollHeight; // Auto-scroll after bot message
+                }, 500);
+            }
+        }
+    </script>
+    
+    </body>
+    </html>
+    
